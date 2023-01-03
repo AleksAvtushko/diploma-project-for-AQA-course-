@@ -8,7 +8,8 @@
         "format:code": "prettier --write \"**/.js,.ts\" ",
         "lint": "eslint ./**/*.{ts,json}",
         "lint:fix": "eslint ./**/*.{ts,json} --quiet --fix",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "jest:run": "Jest"
     },
     "repository": {
         "type": "git",
