@@ -42,10 +42,12 @@ export class RegistrationForm {
     }
 
     SelectorSex() {
-        if (this.sex != ("Male" || "Female")) {
-            return "enter correct sex Male or Female";
-        } else {
+        if (this.sex === "Female") {
             return this.sex;
+        } else if (this.sex === "Male") {
+            return this.sex;
+        } else {
+            return "enter correct sex Male or Female";
         }
     }
     NameValue() {

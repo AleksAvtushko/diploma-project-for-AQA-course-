@@ -1,4 +1,4 @@
-import { RegistrationForm } from "./registrationForm";
+import { RegistrationForm } from "../scr/registrationForm";
 
 const testRegFormWithMinVal = new RegistrationForm("S", "Qwer", "Y", 17, "Gmale");
 const testRegFormWithMaxVal = new RegistrationForm(
