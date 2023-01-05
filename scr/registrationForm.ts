@@ -1,11 +1,11 @@
 export class RegistrationForm {
-    login: any;
-    password: any;
+    login: string;
+    password: string;
     name: string;
     age: number;
     sex: string;
 
-    constructor(login: any, password: any, name: string, age: number, sex: string) {
+    constructor(login: string, password: string, name: string, age: number, sex: string) {
         this.login = login;
         this.password = password;
         this.name = name;
