@@ -1,4 +1,3 @@
-import { RegistrationForm } from "../scr/registrationForm";
 import { expect } from "@jest/globals";
 import { TestData } from "../scr/commonJest";
 
