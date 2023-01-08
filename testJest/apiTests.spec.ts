@@ -1,17 +1,19 @@
 import superagent from "superagent";
+import { expect } from "@jest/globals";
+import { StatusCode } from "../scr/commonJest";
 describe("Check get request", () => {
     test("Check get SINGLE RESOURCE", async () => {
         const res = await superagent.get("https://reqres.in/api/unknown/2");
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(StatusCode.getStatus("ExpectedCode200"));
     });
     test("Check get LIST RESOURCE", async () => {
         const res = await superagent.get("https://reqres.in/api/unknown");
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(StatusCode.getStatus("ExpectedCode200"));
     });
 
     test("Check get LIST RESOURCE", async () => {
         const res = await superagent.get("https://jsonplaceholder.typicode.com/posts/1");
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(StatusCode.getStatus("ExpectedCode200"));
     });
 
     test("SINGLE USER NOT FOUND", async () => {
@@ -19,7 +21,7 @@ describe("Check get request", () => {
         try {
             res = await superagent.get("https://reqres.in/api/users/23");
         } catch (error: any) {
-            expect(error.status).toBe(404);
+            expect(error.status).toBe(StatusCode.getStatus("ExpectedCode404"));
         }
     });
 
@@ -28,7 +30,7 @@ describe("Check get request", () => {
         try {
             res = await superagent.get("https://reqres.in/api/unknown/23");
         } catch (error: any) {
-            expect(error.status).toBe(404);
+            expect(error.status).toBe(StatusCode.getStatus("ExpectedCode404"));
         }
     });
 });
@@ -49,7 +51,7 @@ describe("Check POST request", () => {
         } catch (error: any) {
             expect(error.message).toBe("Bad Request");
         }
-        expect(res.status).toBe(201);
+        expect(res.status).toBe(StatusCode.getStatus("ExpectedCode201"));
     });
 
     test("LOGIN - SUCCESSFUL", async () => {
@@ -59,7 +61,7 @@ describe("Check POST request", () => {
                 email: "peter@klaven",
             });
         } catch (error: any) {
-            expect(error.status).toBe(400);
+            expect(error.status).toBe(StatusCode.getStatus("ExpectedCode400"));
         }
     });
 
@@ -73,7 +75,7 @@ describe("Check POST request", () => {
         } catch (error: any) {
             expect(error.message).toBe("Bad Request");
         }
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(StatusCode.getStatus("ExpectedCode200"));
     });
 });
 
@@ -85,7 +87,7 @@ describe("Check DELETE request", () => {
         } catch (error: any) {
             throw new Error(error);
         }
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(StatusCode.getStatus("ExpectedCode200"));
         expect(res.body).toBeDefined();
     });
 
@@ -96,7 +98,7 @@ describe("Check DELETE request", () => {
         } catch (error: any) {
             throw new Error(error);
         }
-        expect(res.status).toBe(204);
+        expect(res.status).toBe(StatusCode.getStatus("ExpectedCode204"));
         expect(res.body).toBeDefined();
     });
 });
@@ -112,7 +114,7 @@ describe("Check PUT request", () => {
         } catch (error: any) {
             expect(error.message).toBe("Bad Request");
         }
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(StatusCode.getStatus("ExpectedCode200"));
     });
 
     test("put value to jsonplaceholder", async () => {
@@ -127,6 +129,6 @@ describe("Check PUT request", () => {
         } catch (error: any) {
             expect(error.message).toBe("Bad Request");
         }
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(StatusCode.getStatus("ExpectedCode200"));
     });
 });
