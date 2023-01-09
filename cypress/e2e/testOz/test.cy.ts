@@ -1,7 +1,4 @@
-import { logger } from "../../../configLog4js";
-import log4js from "log4js";
-
-describe("visit oz.by site", () => {
+describe("visit oz.by site positive tests", () => {
     beforeEach(() => {
         cy.visit("https://oz.by/");
     });
@@ -10,12 +7,31 @@ describe("visit oz.by site", () => {
         cy.get("[class=top-panel__logo__item]").should("be.visible");
     });
 
-    it("check: search with invalid value", () => {
-        const invalidValue = "invalidSearch";
-        cy.get("[id=top-s]").type(`${invalidValue} {enter}`);
-        cy.get('h1[class="breadcrumbs__list__item"]')
-            .find("span")
-            .should("have.text", `По запросу «${invalidValue}» ничего не найдено`);
+    it("check: phone number is displayed on head page", () => {
+        cy.get('[class="top-panel__hnav__phone__numb"]').should("have.text", "695-25-25");
+    });
+
+    it("check: menu carousel on the home page", () => {
+        cy.get('[class="offers-slider__pagination__item"]').should("be.visible");
+    });
+
+    it("check: correct result is displayed in carousel menu", () => {
+        const expectedRes = "Товары для бани и сауны";
+        cy.get('[class="offers-slider__pagination__items"]').find('[href="#8"]').click();
+        cy.get('[class="offers-slider__item__main-title"]').eq(8).should("have.text", `${expectedRes.trim()}`);
+    });
+
+    it("check: add item to card from the preview menu", () => {
+        cy.get('[class="menu-link-action main-nav__list__item "]').eq(3).click();
+        cy.get('[class="item-type-card__btn"]').first().click();
+        cy.get('[class="top-panel__userbar__cart__count"]').should("have.text", "1");
+    });
+
+    it("check: the selected path is not reset after refresh page", () => {
+        cy.get('[class="menu-link-action main-nav__list__item "]').eq(3).click();
+        cy.get('[class="landing-nav-list__title"]').eq(2).click();
+        cy.reload();
+        cy.get('[itemprop="name"]').last().should("have.text", "Конструкторы");
     });
 
     it("check: search with valid value", () => {
@@ -50,5 +66,32 @@ describe("visit oz.by site", () => {
         cy.wait("@searchText");
         cy.get('[class="dp-showresults__content"]').click();
         cy.get(' [class="top-filters__sqcheckers__item"]').first().should("not.have.text", "На складе");
+    });
+
+    it("check: filter by cheapest", () => {
+        cy.get('[class="menu-link-action main-nav__list__item "]').first().click();
+        cy.get('[class="top-filters__eselect__item top-filters__viewer__open"]').click();
+        cy.get('[class="filters__chkslist__li "]').eq(1).click();
+        cy.get('[class="item-type-card__btn"]').eq(1).should("not.have.text", `1.00 руб.`);
+    });
+});
+
+describe("visit oz.by site negative tests", () => {
+    beforeEach(() => {
+        cy.visit("https://oz.by/");
+    });
+
+    it("check: search with invalid value", () => {
+        const invalidValue = "invalidSearch";
+        cy.get("[id=top-s]").type(`${invalidValue} {enter}`);
+        cy.get('h1[class="breadcrumbs__list__item"]')
+            .find("span")
+            .should("have.text", `По запросу «${invalidValue}» ничего не найдено`);
+    });
+
+    it("Check: click to search filter without value", () => {
+        cy.get('[class="top-panel__search__btn__item"]')
+            .click()
+            .should("not.be.selected", '[class="breadcrumbs__list__li active last a-open "]');
     });
 });

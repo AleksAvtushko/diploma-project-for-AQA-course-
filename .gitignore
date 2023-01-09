@@ -3,12 +3,8 @@ node_modules/
 .db
 .log
 /test-results/
-/playwright-report/
-/playwright/.cache/
 /allure-results
 /allure-report
-app.log
-/playwright-report
 /cypress/screenshots/test.cy.ts/
 /cypress/videos/
 
