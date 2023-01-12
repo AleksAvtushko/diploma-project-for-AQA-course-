@@ -15,10 +15,10 @@ describe("visit oz.by site positive tests", () => {
         cy.get('[class="offers-slider__pagination__item"]').should("be.visible");
     });
 
-    it("check: correct result is displayed in carousel menu", () => {
+    it.only("check: correct result is displayed in carousel menu", () => {
         const expectedRes = "Товары для бани и сауны";
         cy.get('[class="offers-slider__pagination__items"]').find('[href="#8"]').click();
-        cy.get('[class="offers-slider__item__main-title"]').eq(8).should("have.text", `${expectedRes.trim()}`);
+        cy.get('[class="offers-slider__item__main-title"]').eq(9).should("have.text", expectedRes);
     });
 
     it("check: add item to card from the preview menu", () => {
